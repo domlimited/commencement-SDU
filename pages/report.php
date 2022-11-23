@@ -37,6 +37,22 @@ if(!$row_information){
             height: 40px;
         }
 
+        @media print {
+            #hid {
+                display: none;
+            }
+            #tel_button {
+                display: none;
+            }
+            #input_img {
+                width: 300px;
+            }
+            @page {
+                margin: -2cm;
+                size: A4 landscape;
+            }
+        }
+
         </style>
     </head>
     <body class="img js-fullheight" style="background-image: url(images/bg.jpg);">
@@ -46,13 +62,13 @@ if(!$row_information){
                     <div class="row">
                         <div class="col-md-12 col-lg-3">
                             <form action="Controllers/logoutControllers.php" class="signin-form">
-                                <button type="submit" class="form-control btn btn-primary submit px-3">ออกจากระบบ</button>
+                                <button type="submit" class="form-control btn btn-primary submit px-3" id="hid">ออกจากระบบ</button>
                             </form>
                         </div>
                         <div class="col-md-12 col-lg-6">
                         </div>
                         <div class="col-md-12 col-lg-3">
-                            <button type="submit" class="form-control btn btn-primary submit" onClick="PrintDiv()">ปริ้น</button>
+                            <button type="submit" class="form-control btn btn-primary submit" id="hid" onClick="window.print()">ปริ้น</button>
                         </div>
                     </div>
                     <div id="div_print">
@@ -63,7 +79,7 @@ if(!$row_information){
                             <center>
                             <div class="col-md-12 col-lg-12">
                                 <div class="form-group">
-                                    <img class="card-img-top" width="auto" height="200" src="images/<?php echo $row_information['i_img']; ?>" alt=".">
+                                    <img class="card-img-top" id="input_img" width="auto" height="200" src="images/<?php echo $row_information['i_img']; ?>" alt=".">
                                 </div>
                                 <div class="form-group">
                                     <h4 class="mb-4 text-white"><?php echo $row_information['i_name']; ?></h4>
@@ -128,23 +144,6 @@ if(!$row_information){
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
-        <script language="javascript">
-        function PrintDiv() {
-            var divToPrint = document.getElementById('div_print');
-            var html = '<html>' + // 
-                '<head>' +
-                '<style type="text/css">' +
-                ' #tel_button {  visibility: hidden; }' +
-                '</style>' +
-                '</head>' +
-                '<body onload="window.print(); window.close();">' + divToPrint.innerHTML + '</body>' +
-                '</html>';
-
-            var popupWin = window.open();
-            popupWin.document.open();
-            popupWin.document.write(html);
-            popupWin.document.close();
-        }
         </script>
         <?php
         if(isset($_GET['msg'])){
